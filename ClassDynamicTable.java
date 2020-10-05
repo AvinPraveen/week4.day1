@@ -1,5 +1,6 @@
 package Week4.day1;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -30,17 +31,27 @@ public class ClassDynamicTable {
 		driver.findElementById("txtStationTo").sendKeys(Keys.TAB);
 		Thread.sleep(2000);
 		
-		int size = driver.findElementsByXPath("//table[@class='DataTable TrainList TrainListHeader']//tr").size();
-		System.out.println(size);
-		
-		List<WebElement> list = driver.findElementsByXPath("//table[@class='DataTable TrainList TrainListHeader']//tr");
-		Set<WebElement> uniquecount = new HashSet<WebElement>(list);
-		
-		for (WebElement u : uniquecount ) {
-			  System.out.println(u.getText());
-			  }
-		
-
+		int listsize = driver.findElementsByXPath("//table[@class='DataTable TrainList TrainListHeader']//tr").size();
+		System.out.println(listsize);
+		List<String> list=new ArrayList<String>();
+		for (int i = 1; i < listsize; i++) {
+			String text = driver.findElementByXPath("//table[@class='DataTable TrainList TrainListHeader']//tr["+i+"]/td[2]").getText();
+			System.out.println(text);
+			list.add(text);
+		}
+		Set<String> setCopy=new HashSet<String>(list);
+		int setsize = setCopy.size();
+		/*
+		 * List<WebElement> list = driver.
+		 * findElementsByXPath("//table[@class='DataTable TrainList TrainListHeader']//tr"
+		 * ); Set<WebElement> uniquecount = new HashSet<WebElement>(list);
+		 * 
+		 * for (WebElement u : uniquecount ) { System.out.println(u.getText()); }
+		 */
+		if(listsize==setsize)
+			System.out.println("no duplicate");
+		else
+			System.out.println("duplicate are avaiable ");
 	}
 
 }
